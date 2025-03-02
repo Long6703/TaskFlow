@@ -11,7 +11,7 @@ namespace Persistence
         {
             services.AddDbContext<TaskFlowContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("HrDatabaseConnectionString"));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
             return services;
         }

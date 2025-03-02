@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application.Contracts.Email;
+using Application.Models.EmailModel;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -8,10 +10,12 @@ namespace API.Controllers
     public class TestController : ControllerBase
     {
         private readonly ILogger<TestController> _logger;
+        private readonly IEmailSender _emailSender;
 
-        public TestController(ILogger<TestController> logger)
+        public TestController(ILogger<TestController> logger, IEmailSender emailSender)
         {
             _logger = logger;
+            _emailSender = emailSender;
         }
 
         [HttpGet("log-info")]
@@ -33,6 +37,30 @@ namespace API.Controllers
         {
             _logger.LogError("This is an Error log.");
             return Ok("Error log recorded.");
+        }
+
+        [HttpGet("send")]
+        public async Task<IActionResult> SendEmail()
+        {
+            _logger.LogInformation("Sending email...");
+            EmailMessage email = new EmailMessage
+            {
+                To = "nguyenkhaclong12a8pkk@gmail.com",
+                Subject = "Test Email",
+                Body = "This is a test email."
+            };
+
+            var result = await _emailSender.SendEmailAsync(email);
+            _logger.LogInformation("Email sent.");
+
+            if (result)
+            {
+                return Ok("Email sent successfully.");
+            }
+            else
+            {
+                return StatusCode(500, "An error occurred while sending the email.");
+            }        
         }
     }
 }

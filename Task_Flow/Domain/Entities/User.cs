@@ -1,14 +1,27 @@
-﻿using Domain.Entities.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using Domain.Abstraction;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace Domain.Entities
 {
-    public class User : EntityBaseTracking<Guid>
+    public class User : BaseEntity<Guid>, IAuditable, ISoftDeletable
     {
-        // More properties here ignored for id, created date, last modified date, and is deleted
+        [Required]
+        [MaxLength(50)]
+        public string Username { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Email { get; set; }
+
+        [Required]
+        [MaxLength(255)]
+        public string PasswordHash { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string Role { get; set; }
+        public ICollection<Group> Groups { get; set; } = new List<Group>();
     }
 }
