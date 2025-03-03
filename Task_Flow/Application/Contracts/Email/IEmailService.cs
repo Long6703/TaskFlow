@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Application.Contracts.Email
 {
-    public interface IEmailSender
+    public interface IEmailService
     {
-        Task SendEmailAsync(EmailMessage emailMessage);
+        Task QueueEmailAsync(EmailMessage emailMessage);
+        Task QueueEmailAsync(string to, string subject, string body, bool isHtml = true);
     }
 }

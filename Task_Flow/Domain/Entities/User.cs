@@ -19,9 +19,8 @@ namespace Domain.Entities
         [MaxLength(255)]
         public string PasswordHash { get; set; }
 
-        [Required]
-        [MaxLength(20)]
-        public string Role { get; set; }
+        [MaxLength(255)]
+        public string avatarUrl { get; set; }
         public ICollection<Group> Groups { get; set; } = new List<Group>();
     }
 }

@@ -10,12 +10,12 @@ namespace API.Controllers
     public class TestController : ControllerBase
     {
         private readonly ILogger<TestController> _logger;
-        private readonly IEmailSender _emailSender;
+        private readonly IEmailService _emailService;
 
-        public TestController(ILogger<TestController> logger, IEmailSender emailSender)
+        public TestController(ILogger<TestController> logger, IEmailService emailService)
         {
             _logger = logger;
-            _emailSender = emailSender;
+            _emailService = emailService;
         }
 
         [HttpGet("log-info")]
@@ -43,24 +43,13 @@ namespace API.Controllers
         public async Task<IActionResult> SendEmail()
         {
             _logger.LogInformation("Sending email...");
-            EmailMessage email = new EmailMessage
-            {
-                To = "nguyenkhaclong12a8pkk@gmail.com",
-                Subject = "Test Email",
-                Body = "This is a test email."
-            };
+            await _emailService.QueueEmailAsync(
+                "nguyenkhaclong12a8pkk@gmail.com",
+                "Thông báo mới",
+                "<p>Đây là nội dung <strong>HTML</strong> của email</p>",
+                true);
 
-            var result = await _emailSender.SendEmailAsync(email);
-            _logger.LogInformation("Email sent.");
-
-            if (result)
-            {
-                return Ok("Email sent successfully.");
-            }
-            else
-            {
-                return StatusCode(500, "An error occurred while sending the email.");
-            }        
+            return Ok("Email sent successfully.");
         }
     }
 }
