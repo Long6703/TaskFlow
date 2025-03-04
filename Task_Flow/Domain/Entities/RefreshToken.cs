@@ -9,6 +9,7 @@ namespace Domain.Entities
         public DateTime ExpiresAt { get; set; }
         public bool IsRevoked { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string DeviceId { get; set; }
 
         public virtual User User { get; set; }
     }
