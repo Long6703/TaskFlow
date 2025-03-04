@@ -14,4 +14,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\IService\" />
+    <Folder Include="Services\" />
+    <Folder Include="UseCase\" />
+  </ItemGroup>
+
 </Project>

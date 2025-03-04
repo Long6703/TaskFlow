@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@layout NoMenuLayout
 
 <PageTitle>Login</PageTitle>
 
@@ -15,7 +16,7 @@
     }
 </style>
 
-<section class="vh-100" style="background-color: gray;">
+<section class="vh-100" style="background-color: #2563eb;">
     <div class="container py-5 h-50">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col col-xl-6">
@@ -26,26 +27,32 @@
                                 <div class="d-flex align-items-center mb-3 pb-1">
                                     <span style="color: #2563eb;" class="h1 fw-bold mb-0">Welcome to TaskFlow</span>
                                 </div>
-
                                 <!-- Email -->
                                 <div class="mb-4">
                                     <input placeholder="Enter your email...." type="email" id="form2Example17" class="form-control form-control-sm" />
                                 </div>
-
                                 <!-- Password -->
                                 <div class="form-outline mb-4">
                                     <input placeholder="Enter your password...." type="password" id="form2Example27" class="form-control form-control-sm" />
                                 </div>
-
                                 <!-- Login Button -->
                                 <div class="pt-1 mb-4">
                                     <button style="background:#2563eb; width:150px" class="btn btn-dark btn-lg btn-block" type="button">Login</button>
                                 </div>
-
                                 <a class="text-muted" href="#!">Forgot password?</a>
                                 <p class="mb-5 pb-lg-2" style="color: #393f81;">
-                                    Don't have an account? <a href="#!" style="color: #393f81;">Register here</a>
+                                    Don't have an account? <a href="/register" style="color: #393f81;">Register here</a>
                                 </p>
+                                <div class="divider d-flex align-items-center my-4 position-relative">
+                                    <hr class="w-100" />
+                                    <p class="text-center fw-bold mx-3 mb-0 text-muted position-absolute start-50 translate-middle-x bg-white px-3">OR</p>
+                                </div>
+                                <div class="text-center">
+                                    <a data-mdb-ripple-init class="btn btn-primary btn-lg d-flex align-items-center justify-content-center"
+                                       style="background-color: #2563eb; width: 100%;" href="#!" role="button">
+                                        <i class="fab fa-google me-2"></i> Continue with Google
+                                    </a>
+                                </div>
                             </form>
                         </div>
                     </div>

@@ -5,7 +5,7 @@ using System.Data;
 
 namespace Domain.Entities
 {
-    public class User : BaseEntity<Guid>, IAuditable, ISoftDeletable
+    public class User : BaseAuditEntity<Guid>, IAuditable, ISoftDeletable
     {
         [Required]
         [MaxLength(50)]
@@ -22,5 +22,6 @@ namespace Domain.Entities
         [MaxLength(255)]
         public string avatarUrl { get; set; }
         public ICollection<Group> Groups { get; set; } = new List<Group>();
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }

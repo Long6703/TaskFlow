@@ -1,0 +1,58 @@
+﻿@page "/register"
+@layout NoMenuLayout
+
+<PageTitle>Register</PageTitle>
+<style>
+    .form-control-sm {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .btn {
+        width: auto;
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+</style>
+<section class="vh-100" style="background-color: #2563eb;">
+    <div class="container py-5 h-50">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-6">
+                <div class="card" style="border-radius: 1rem;">
+                    <div class="col-md-12 d-flex align-items-center">
+                        <div class="card-body p-4 p-lg-5 text-black">
+                            <form>
+                                <div class="d-flex align-items-center mb-3 pb-1">
+                                    <span style="color: #2563eb;" class="h1 fw-bold mb-0">Create Account</span>
+                                </div>
+                                <!-- Full Name -->
+                                <div class="mb-4">
+                                    <input placeholder="Enter your full name..." type="text" id="fullName" class="form-control form-control-sm" />
+                                </div>
+                                <!-- Email -->
+                                <div class="mb-4">
+                                    <input placeholder="Enter your email..." type="email" id="email" class="form-control form-control-sm" />
+                                </div>
+                                <!-- Password -->
+                                <div class="form-outline mb-4">
+                                    <input placeholder="Create a password..." type="password" id="password" class="form-control form-control-sm" />
+                                </div>
+                                <!-- Confirm Password -->
+                                <div class="form-outline mb-4">
+                                    <input placeholder="Confirm your password..." type="password" id="confirmPassword" class="form-control form-control-sm" />
+                                </div>
+                                <!-- Register Button -->
+                                <div class="pt-1 mb-4">
+                                    <button style="background:#2563eb; width:150px" class="btn btn-dark btn-lg btn-block" type="button">Register</button>
+                                </div>
+                                <p class="mb-5 pb-lg-2" style="color: #393f81;">
+                                    Already have an account? <a href="/login" style="color: #393f81;">Login here</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -10,7 +10,7 @@ using System.Data;
 
 namespace Domain.Entities
 {
-    public class Permission : ISoftDeletable
+    public class Permission : BaseEntity<int>, ISoftDeletable
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
