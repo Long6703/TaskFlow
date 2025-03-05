@@ -1,4 +1,4 @@
-﻿using Application.Contracts.Persistence;
+﻿using Application.Contracts.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repository

@@ -1,3 +1,4 @@
+using API.Middleware;
 using Application;
 using Infrastructure;
 using Persistence;
@@ -22,11 +23,24 @@ namespace API
             builder.Services.AddInfrastructureServices(builder.Configuration);
 
             builder.Services.AddControllers();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("all", builder => builder.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+            });
+
+            builder.Services.AddHttpContextAccessor();
+
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -36,8 +50,13 @@ namespace API
             }
             app.UseSerilogRequestLogging();
 
-            app.UseAuthorization();
+            app.UseHttpsRedirection();
+            app.UseRouting();
 
+            app.UseCors("all");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllers();
 

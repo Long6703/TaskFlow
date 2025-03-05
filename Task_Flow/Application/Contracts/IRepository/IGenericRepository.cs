@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Application.Contracts.Persistence
+namespace Application.Contracts.IRepository
 {
     public interface IGenericRepository<TEntity, TContext> where TEntity : class where TContext : DbContext
     {

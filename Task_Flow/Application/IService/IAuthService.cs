@@ -1,6 +1,6 @@
 ﻿using Shared.Models;
 
-namespace Application.Contracts.IService
+namespace Application.IService
 {
     public interface IAuthService
     {

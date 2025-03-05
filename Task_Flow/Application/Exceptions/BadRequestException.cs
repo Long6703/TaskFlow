@@ -1,4 +1,5 @@
-﻿
+﻿using FluentValidation.Results;
+
 namespace Application.Exceptions
 {
     public class BadRequestException : Exception
@@ -8,10 +9,10 @@ namespace Application.Exceptions
 
         }
 
-        //public BadRequestException(string message, ValidationResult validationResult) : base(message)
-        //{
-        //    ValidationErrors = validationResult.ToDictionary();
-        //}
+        public BadRequestException(string message, ValidationResult validationResult) : base(message)
+        {
+            ValidationErrors = validationResult.ToDictionary();
+        }
 
         public IDictionary<string, string[]> ValidationErrors { get; set; }
     }
