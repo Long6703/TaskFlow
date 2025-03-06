@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Domain.Abstraction;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.DatabaseContext
@@ -18,5 +19,36 @@ namespace Infrastructure.DatabaseContext
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TaskFlowContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var entries = ChangeTracker.Entries()
+                .Where(e => e.Entity is BaseAuditEntity<int> || e.Entity is BaseAuditEntity<Guid>)
+                .ToList();
+
+            foreach (var entry in entries)
+            {
+                var entity = entry.Entity as dynamic;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entity.DateCreated = DateTime.UtcNow;
+                    entity.CreatedBy = "System";
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entity.DateModified = DateTime.UtcNow;
+                    entity.ModifiedBy = "System";
+                }
+                else if (entry.State == EntityState.Deleted)
+                {
+                    entry.State = EntityState.Modified;
+                    entity.IsDeleted = true;
+                }
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

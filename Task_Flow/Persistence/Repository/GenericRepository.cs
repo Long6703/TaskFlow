@@ -1,14 +1,15 @@
 ﻿using Application.Contracts.IRepository;
+using Infrastructure.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence.Repository
 {
-    public class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity, TContext> where TEntity : class where TContext : DbContext
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly TContext _context;
+        protected readonly TaskFlowContext _context;
         private readonly DbSet<TEntity> _dbSet;
 
-        public GenericRepository(TContext context)
+        public GenericRepository(TaskFlowContext context)
         {
             _context = context;
             _dbSet = _context.Set<TEntity>();

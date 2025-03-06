@@ -2,7 +2,7 @@
 
 namespace Application.Contracts.IRepository
 {
-    public interface IGenericRepository<TEntity, TContext> where TEntity : class where TContext : DbContext
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetByIdAsync(object id);
         Task<IEnumerable<TEntity>> ListAllAsync();
