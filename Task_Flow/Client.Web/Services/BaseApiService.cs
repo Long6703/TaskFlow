@@ -6,9 +6,9 @@ namespace Client.Web.Services
     {
         protected readonly HttpClient _httpClient;
 
-        public BaseApiService(HttpClient httpClient)
+        public BaseApiService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient("TaskFlowApi");
         }
 
         protected async Task<T> GetAsync<T>(string endpoint)

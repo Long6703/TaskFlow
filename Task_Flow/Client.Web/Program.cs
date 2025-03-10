@@ -1,9 +1,10 @@
+using Client.Web.IServices;
+using Client.Web.Middleware;
 using Client.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 using System.Text;
 
 namespace Client.Web
@@ -17,10 +18,14 @@ namespace Client.Web
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddServerSideBlazor();
+            builder.Services.AddLogging(logging => logging.AddConsole());
+            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddHttpClient("TaskFlowApi", client =>
             {
-                client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]);
+                var baseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? throw new InvalidOperationException("BaseUrl not config.");
+                client.BaseAddress = new Uri(baseUrl);
                 client.DefaultRequestHeaders.Add("Accept", "application/json");
             }).AddHttpMessageHandler<JwtAuthorizationHandler>();
 
@@ -39,10 +44,22 @@ namespace Client.Web
                 };
             });
 
-            builder.Services.AddScoped<JwtAuthorizationHandler>();
-            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
+            builder.Services.AddSingleton<TokenManagementService>();
+            builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            builder.Services.AddScoped<JwtAuthorizationHandler>();
+            builder.Services.AddScoped<IEmailService, EmailService>();
+
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient();
+            builder.Services.AddAntDesign();
 
             var app = builder.Build();
 
@@ -53,9 +70,12 @@ namespace Client.Web
                 app.UseHsts();
             }
 
+            app.UseSession();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -66,4 +86,5 @@ namespace Client.Web
             app.Run();
         }
     }
+
 }

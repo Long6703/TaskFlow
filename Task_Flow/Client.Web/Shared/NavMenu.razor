@@ -1,14 +1,30 @@
-﻿<header class="header">
-    <nav class="nav container">
-        <div class="logo">TaskFlow</div>
-        <div class="nav-links">
-            <button class="nav-btn">Dashboard</button>
-            <button class="nav-btn">Projects</button>
-            <button class="nav-btn">Calendar</button>
-            <button class="nav-btn">Profile</button>
-        </div>
-    </nav>
-</header>
+﻿
+<AuthorizeView>
+    <Authorized>
+        <header class="header">
+            <nav class="nav container">
+                <div class="logo">TaskFlow</div>
+                <div class="nav-links">
+                    <button class="nav-btn">Dashboard</button>
+                    <button class="nav-btn">Projects</button>
+                    <button class="nav-btn">Calendar</button>
+                    <button class="nav-btn">Profile</button>
+                </div>
+            </nav>
+        </header>
+    </Authorized>
+    <NotAuthorized>
+        <header class="header">
+            <nav class="nav container">
+                <div class="logo">TaskFlow</div>
+                <div class="nav-links">
+                    <button class="nav-btn" onclick="window.location.href='/login'">Login</button>
+                    <button class="nav-btn" onclick="window.location.href='/register'">Register</button>
+                </div>
+            </nav>
+        </header>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
 
